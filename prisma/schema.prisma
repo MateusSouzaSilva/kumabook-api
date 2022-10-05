@@ -9,3 +9,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Produtos {
+  id               Int              @id @default(autoincrement())
+  nome             String           @unique @db.VarChar(50)
+  ano_lancamento   String           @db.VarChar(4)
+  editora          String           @db.VarChar(20)
+  preco            Float
+  data_criacao     DateTime         @default(now()) @db.Timestamptz(3)
+  data_atualizacao DateTime         @updatedAt @db.Timestamptz(3)
+  data_exclusao    DateTime?
+
+  @@map("produtos")
+}
