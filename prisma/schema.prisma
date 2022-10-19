@@ -15,7 +15,7 @@ model Produtos {
   nome             String           @unique @db.VarChar(50)
   ano_lancamento   String           @db.VarChar(4)
   editora          String           @db.VarChar(20)
-  preco            Float
+  preco            Decimal
   data_criacao     DateTime         @default(now()) @db.Timestamptz(3)
   data_atualizacao DateTime         @updatedAt @db.Timestamptz(3)
   data_exclusao    DateTime?
