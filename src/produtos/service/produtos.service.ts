@@ -6,13 +6,12 @@ import { Produto } from '../entities/produto.entity';
 
 @Injectable()
 export class ProdutosService {
-  constructor(private readonly prismaClient: PrismaClient){}
+  constructor(private readonly prismaClient: PrismaClient) {}
 
-  async adicionaProduto(dados: CreateProdutoDto): Promise<Produto> {
+  async adicionaProduto(dados: CreateProdutoDto) {
     const produto = await this.prismaClient.produtos.create({
-      data: dados
-    })
-    return ;
+      data: dados,
+    });
   }
 
   async buscaTodosProdutos(): Promise<Produto[]> {
@@ -24,8 +23,8 @@ export class ProdutosService {
     const produto = await this.prismaClient.produtos.findFirst({
       where: {
         id,
-      }
-    })
+      },
+    });
     return produto;
   }
 
@@ -33,7 +32,7 @@ export class ProdutosService {
     const produtoExiste = await this.prismaClient.produtos.findUnique({
       where: {
         id,
-      }
+      },
     });
 
     if (!produtoExiste) {
@@ -44,7 +43,7 @@ export class ProdutosService {
       data,
       where: {
         id,
-      }
+      },
     });
 
     return `Produto de id ${id} atualizado com sucesso!`;
@@ -59,10 +58,10 @@ export class ProdutosService {
 
     await this.prismaClient.produtos.delete({
       where: {
-        id
-      }
+        id,
+      },
     });
-    
+
     return `Produto de id ${id} excluido com sucesso!`;
   }
 }
