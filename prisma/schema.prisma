@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Produtos {
-  id               Int              @id @default(autoincrement())
+  id               String           @id @default(uuid())
   nome             String           @unique @db.VarChar(50)
   autor            String           @db.VarChar(50)
   ano_lancamento   String           @db.VarChar(4)

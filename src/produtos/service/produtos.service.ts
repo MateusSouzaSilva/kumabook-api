@@ -19,7 +19,7 @@ export class ProdutosService {
     return produtos;
   }
 
-  async buscaProdutoPorId(id: number): Promise<Produto> {
+  async buscaProdutoPorId(id: string): Promise<Produto> {
     const produto = await this.prismaClient.produtos.findFirst({
       where: {
         id,
@@ -28,7 +28,7 @@ export class ProdutosService {
     return produto;
   }
 
-  async atualizaProduto(id: number, data: UpdateProdutoDto) {
+  async atualizaProduto(id: string, data: UpdateProdutoDto) {
     const produtoExiste = await this.prismaClient.produtos.findUnique({
       where: {
         id,
@@ -49,7 +49,7 @@ export class ProdutosService {
     return `Produto de id ${id} atualizado com sucesso!`;
   }
 
-  async deletaProduto(id: number) {
+  async deletaProduto(id: string) {
     const produto = await this.buscaProdutoPorId(id);
 
     if (!produto) {

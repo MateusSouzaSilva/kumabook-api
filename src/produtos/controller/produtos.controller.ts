@@ -27,16 +27,16 @@ export class ProdutosController {
 
   @Get(':id')
   buscaProdutoPorID(@Param('id') id: string) {
-    return this.produtosService.buscaProdutoPorId(+id);
+    return this.produtosService.buscaProdutoPorId(id);
   }
 
   @Put(':id')
-  atualizaProduto(@Param('id') id: number, @Body() data: UpdateProdutoDto) {
-    return this.produtosService.atualizaProduto(+id, data);
+  atualizaProduto(@Param('id') id: string, @Body() data: UpdateProdutoDto) {
+    return this.produtosService.atualizaProduto(id, data);
   }
 
   @Delete(':id')
-  deletaProduto(@Param('id') id: number) {
-    return this.produtosService.deletaProduto(+id);
+  deletaProduto(@Param('id') id: string) {
+    return this.produtosService.deletaProduto(id);
   }
 }
