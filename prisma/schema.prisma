@@ -14,7 +14,7 @@ model Produtos {
   id               Int              @id @default(autoincrement())
   nome             String           @unique @db.VarChar(50)
   autor            String           @db.VarChar(50)
-  ano_lancamento   String           @db.VarChar(4)
+  ano_lancamento   Int              @db.SmallInt
   editora          String           @db.VarChar(20)
   preco            Decimal
   data_criacao     DateTime         @default(now()) @db.Timestamptz(3)
