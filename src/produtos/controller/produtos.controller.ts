@@ -25,6 +25,11 @@ export class ProdutosController {
     return this.produtosService.buscaTodosProdutos();
   }
 
+  @Get(':nome')
+  buscaProdutosPorNome(@Param('nome') nome: string) {
+    return this.produtosService.buscaProdutosPorNome(nome);
+  }
+
   @Get(':id')
   buscaProdutoPorID(@Param('id') id: string) {
     return this.produtosService.buscaProdutoPorId(id);

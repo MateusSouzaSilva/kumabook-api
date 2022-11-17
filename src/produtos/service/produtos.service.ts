@@ -19,6 +19,17 @@ export class ProdutosService {
     return produtos;
   }
 
+  async buscaProdutosPorNome(nome: string): Promise<Produto[]> {
+    const produtos  = await this.prismaClient.produtos.findMany({
+      where: {
+        nome: {
+          contains: nome,
+        },
+      },
+    });
+    return produtos;
+  }
+
   async buscaProdutoPorId(id: string): Promise<Produto> {
     const produto = await this.prismaClient.produtos.findFirst({
       where: {
