@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Estoque, PrismaClient } from '@prisma/client';
+import { UpdateEstoqueDto } from 'src/estoque/dto/update-estoque.dto';
 import { Produto } from 'src/produtos/entities/produto.entity';
 import { CreateEstoqueDto } from '../dto/create-estoque.dto';
 
@@ -26,22 +27,50 @@ export class EstoqueService {
             
         }
 
-    async buscarTodoEstoque(): Promise<Estoque[]> {
-        const estoques = await this.prismaClient.estoque.findMany({
-            where: {},
+    async buscarTodoEstoque(): Promise<any[]> {
+        const estoques = await this.prismaClient.produtos.findMany({
+            where: {},select: {
+                nome: true,
+                autor: true,
+                estoque: true,
+            }
         });
         return estoques;
     }
 
-    async buscarEstoqueDetalhado(id: string): Promise<any[]> {
-        const estoques = await this.prismaClient.produtos.findMany({
+    async buscarEstoquePorNome(nome: string): Promise<any[]> {
+        const estoqueNome = await this.prismaClient.produtos.findMany({
+            where: {
+                nome: {
+                    contains: nome,
+                }
+            },
+            select: {
+                nome: true,
+                autor: true,
+                estoque: true,
+            }
+        });
+        return estoqueNome;
+    }
+
+    async atualizaEstoque(id: string, data: UpdateEstoqueDto) {
+        const estoqueExiste = await this.prismaClient.estoque.findUnique({
             where: {
                 id,
             },
-            select: {
-                nome: true
-            }
+
         });
-        return estoques;
+
+        if (!estoqueExiste) {
+            throw new NotFoundException(`O estoque de id ${id} não existe`);
+        }
+
+        await this.prismaClient.estoque.update({
+            data,
+            where: {
+                id,
+            },
+        });
     }
     }
