@@ -15,4 +15,7 @@ export class CreateProdutoDto {
 
   @IsDecimal()
   preco: number;
+
+  @IsString()
+  id_estoque: string;
 }

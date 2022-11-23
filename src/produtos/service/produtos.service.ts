@@ -20,10 +20,11 @@ export class ProdutosService {
   }
 
   async buscaProdutosPorNome(nome: string): Promise<Produto[]> {
-    const produtos  = await this.prismaClient.produtos.findMany({
+    const produtos = await this.prismaClient.produtos.findMany({
       where: {
         nome: {
           contains: nome,
+          mode: 'insensitive',
         },
       },
     });
