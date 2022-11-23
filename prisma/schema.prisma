@@ -17,9 +17,19 @@ model Produtos {
   ano_lancamento   String           @db.VarChar(4)
   editora          String           @db.VarChar(20)
   preco            Decimal
+  estoque          Estoque          @relation(fields: [id_estoque], references: [id])
+  id_estoque       String           @unique
   data_criacao     DateTime         @default(now()) @db.Timestamptz(3)
   data_atualizacao DateTime         @updatedAt @db.Timestamptz(3)
   data_exclusao    DateTime?
 
   @@map("produtos")
+}
+
+model Estoque {
+  id              String          @id @default(uuid())
+  quantidade      Int             @db.Integer()
+  localizacao     String          @db.VarChar(200)
+  produtos        Produtos[]
+  @@map("estoque")
 }
