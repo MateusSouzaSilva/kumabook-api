@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Estoque, PrismaClient } from '@prisma/client';
 import { UpdateEstoqueDto } from 'src/estoque/dto/update-estoque.dto';
 import { CreateEstoqueDto } from '../dto/create-estoque.dto';
 
@@ -22,6 +22,15 @@ export class EstoqueService {
         produtos: true,
       },
     });
+  }
+
+  async buscaEstoquePorId(id: string): Promise<Estoque> {
+    const estoque = await this.prismaClient.estoque.findFirst({
+      where: {
+        id,
+      },
+    });
+    return estoque;
   }
 
   async buscarTodoEstoque(): Promise<any[]> {
@@ -70,5 +79,21 @@ export class EstoqueService {
         id,
       },
     });
+  }
+
+  async deletaEstoque(id: string) {
+    const estoque = await this.buscaEstoquePorId(id);
+
+    if(!estoque) {
+      throw new NotFoundException('Estoque inexistente')
+    }
+
+    await this.prismaClient.estoque.delete({
+      where: {
+        id,
+      },
+    });
+
+    return `Estoque de id ${id} excluido com sucesso!`
   }
 }
