@@ -33,3 +33,14 @@ model Estoque {
   produtos        Produtos[]
   @@map("estoque")
 }
+
+model Funcionario {
+  id              String          @id @default(uuid())
+  matricula       Int             @db.Integer()
+  email           String          @db.VarChar()
+  telefone        Int             @db.Integer()
+  horarioTrabalho String          @db.VarChar()
+  endereco        String          @db.VarChar()
+
+  @@map("funcionario")
+}
