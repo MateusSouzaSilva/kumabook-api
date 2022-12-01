@@ -2,14 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Funcionario, PrismaClient } from '@prisma/client';
 import { UpdateProdutoDto } from 'src/produtos/dto/update-produto.dto';
 import { CreateFuncionarioDto } from '../dto/create-funcionario.dto';
-import { UpdateFuncionarioDto } from '../dto/update-funcionario.dto';
 
 @Injectable()
 export class FuncionarioService {
   constructor(private readonly prismaClient: PrismaClient) {}
 
   async adicionaFuncionario(dados: CreateFuncionarioDto) {
-    await this.prismaClient.funcionario.create({
+    const funcionario = await this.prismaClient.funcionario.create({
       data: dados,
     });
   }

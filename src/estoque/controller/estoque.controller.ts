@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateEstoqueDto } from '../dto/create-estoque.dto';
 import { UpdateEstoqueDto } from '../dto/update-estoque.dto';
 import { EstoqueService } from '../service/estoque.service';
@@ -17,19 +25,18 @@ export class EstoqueController {
     return this.estoqueService.buscaEstoquePorId(id);
   }
 
-
   @Get()
-  buscaTodoEstoque(){
+  buscaTodoEstoque() {
     return this.estoqueService.buscarTodoEstoque();
   }
 
-  @Get(':nome')
+  @Get('pesquisa/:nome')
   buscarEstoquePorNome(@Param('nome') nome: string) {
     return this.estoqueService.buscarEstoquePorNome(nome);
   }
 
   @Put(':id')
-  atualizaEstoque(@Param('id') id: string, @Body() data:UpdateEstoqueDto) {
+  atualizaEstoque(@Param('id') id: string, @Body() data: UpdateEstoqueDto) {
     return this.estoqueService.atualizaEstoque(id, data);
   }
 

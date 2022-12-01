@@ -9,7 +9,7 @@ export class ProdutosService {
   constructor(private readonly prismaClient: PrismaClient) {}
 
   async adicionaProduto(dados: CreateProdutoDto) {
-    await this.prismaClient.produtos.create({
+    const produto = await this.prismaClient.produtos.create({
       data: dados,
     });
   }

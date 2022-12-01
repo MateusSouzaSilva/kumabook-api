@@ -25,7 +25,7 @@ export class FuncionarioController {
     return this.funcionarioService.buscaTodosFuncionarios();
   }
 
-  @Get(':nome')
+  @Get('pesquisa/:nome')
   buscaFuncionariosPorNome(@Param('nome') nome: string) {
     return this.funcionarioService.buscaFuncionarioPorNome(nome);
   }
