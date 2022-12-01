@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Funcionario, PrismaClient } from '@prisma/client';
+import { UpdateProdutoDto } from 'src/produtos/dto/update-produto.dto';
 import { CreateFuncionarioDto } from '../dto/create-funcionario.dto';
 import { UpdateFuncionarioDto } from '../dto/update-funcionario.dto';
 
@@ -7,25 +8,70 @@ import { UpdateFuncionarioDto } from '../dto/update-funcionario.dto';
 export class FuncionarioService {
   constructor(private readonly prismaClient: PrismaClient) {}
 
-  // async adicionaFuncionario(dados: CreateFuncionarioDto) {
-  //   const funcionario = await this.prismaClient.funcionario.create({
-  //     data: dados,
-  //   });
-  // }
-
-  findAll() {
-    return `This action returns all funcionario`;
+  async adicionaFuncionario(dados: CreateFuncionarioDto) {
+    await this.prismaClient.funcionario.create({
+      data: dados,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} funcionario`;
+  async buscaTodosFuncionarios(): Promise<Funcionario[]> {
+    const funcionarios = await this.prismaClient.funcionario.findMany();
+    return funcionarios;
   }
 
-  update(id: number, updateFuncionarioDto: UpdateFuncionarioDto) {
-    return `This action updates a #${id} funcionario`;
+  async buscaFuncionarioPorId(id: string): Promise<Funcionario> {
+    const funcionario = await this.prismaClient.funcionario.findFirst({
+      where: {
+        id,
+      },
+    });
+    return funcionario;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} funcionario`;
+  async buscaFuncionarioPorNome(nome: string): Promise<Funcionario[]> {
+    const funcionario = await this.prismaClient.funcionario.findMany({
+      where: {
+        nome: {
+          contains: nome,
+          mode: 'insensitive',
+        },
+      },
+    });
+    return funcionario;
+  }
+
+  async atualizaFuncionario(id: string, data: UpdateProdutoDto) {
+    const funcionarioExiste = await this.prismaClient.funcionario.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!funcionarioExiste) {
+      throw new NotFoundException(`Funcionario de id ${id} não existe`);
+    }
+
+    await this.prismaClient.funcionario.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async deletaFuncionario(id: string) {
+    const funcionario = await this.buscaFuncionarioPorId(id);
+
+    if (!funcionario) {
+      throw new NotFoundException('Funcionario não existe');
+    }
+
+    await this.prismaClient.funcionario.delete({
+      where: {
+        id,
+      },
+    });
+
+    return `Funcionario de id ${id} excluido com sucesso!`;
   }
 }

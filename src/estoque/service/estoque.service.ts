@@ -84,8 +84,8 @@ export class EstoqueService {
   async deletaEstoque(id: string) {
     const estoque = await this.buscaEstoquePorId(id);
 
-    if(!estoque) {
-      throw new NotFoundException('Estoque inexistente')
+    if (!estoque) {
+      throw new NotFoundException('Estoque inexistente');
     }
 
     await this.prismaClient.estoque.delete({
@@ -94,6 +94,6 @@ export class EstoqueService {
       },
     });
 
-    return `Estoque de id ${id} excluido com sucesso!`
+    return `Estoque de id ${id} excluido com sucesso!`;
   }
 }
