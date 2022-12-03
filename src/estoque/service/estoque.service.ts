@@ -37,6 +37,7 @@ export class EstoqueService {
     const estoques = await this.prismaClient.produtos.findMany({
       where: {},
       select: {
+        id: true,
         nome: true,
         autor: true,
         estoque: true,
