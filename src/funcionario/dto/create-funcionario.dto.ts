@@ -10,8 +10,8 @@ export class CreateFuncionarioDto {
   @IsString()
   email: string;
 
-  @IsNumber()
-  telefone: number;
+  @IsString()
+  telefone: string;
 
   @IsString()
   horarioTrabalho: string;

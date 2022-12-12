@@ -11,6 +11,7 @@ export class FuncionarioService {
     const funcionario = await this.prismaClient.funcionario.create({
       data: dados,
     });
+    console.log(dados);
   }
 
   async buscaTodosFuncionarios(): Promise<Funcionario[]> {

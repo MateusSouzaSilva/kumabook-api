@@ -39,7 +39,7 @@ model Funcionario {
   nome            String          @db.VarChar()
   matricula       Int             @unique @db.Integer()
   email           String          @db.VarChar()
-  telefone        Int             @db.Integer()
+  telefone        String          @db.VarChar(11)
   horarioTrabalho String          @db.VarChar()
   endereco        String          @db.VarChar()
 

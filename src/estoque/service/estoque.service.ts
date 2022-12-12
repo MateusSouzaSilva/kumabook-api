@@ -30,8 +30,8 @@ export class EstoqueService {
         id,
       },
       include: {
-        produtos: true
-      }
+        produtos: true,
+      },
     });
     return estoque;
   }
@@ -77,7 +77,7 @@ export class EstoqueService {
       throw new NotFoundException(`O estoque de id ${id} não existe`);
     }
     data.quantidade = Number(data.quantidade);
-    console.log(data)
+    console.log(data);
     await this.prismaClient.estoque.update({
       data,
       where: {
