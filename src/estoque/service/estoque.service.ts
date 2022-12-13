@@ -78,8 +78,12 @@ export class EstoqueService {
     }
     data.quantidade = Number(data.quantidade);
     console.log(data);
+
     await this.prismaClient.estoque.update({
-      data,
+      data: {
+        quantidade: data.quantidade,
+        localizacao: data.localizacao,
+      },
       where: {
         id,
       },
